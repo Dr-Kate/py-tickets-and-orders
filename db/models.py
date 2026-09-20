@@ -68,7 +68,7 @@ class Order(models.Model):
         return str(self.created_at)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
 
 class Ticket(models.Model):
@@ -79,7 +79,7 @@ class Ticket(models.Model):
     )
     order = models.ForeignKey(
         Order,
-        on_delete = models.CASCADE,
+        on_delete=models.CASCADE,
         related_name="tickets"
     )
     row = models.IntegerField()
@@ -97,7 +97,8 @@ class Ticket(models.Model):
                 {
                     "row": [
                         f"row number must be in available range: "
-                        f"(1, rows): (1, {self.movie_session.cinema_hall.rows})"
+                        f"(1, rows): (1, "
+                        f"{self.movie_session.cinema_hall.rows})"
                     ]
                 }
             )
