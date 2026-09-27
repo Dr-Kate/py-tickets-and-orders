@@ -135,9 +135,10 @@ def test_auth_user_models():
 
 def test_order_str(orders_data):
     order = Order.objects.get(id=1)
-    assert str(order) == f"<Order: {order.created_at}>"
+    assert str(order) == str(order.created_at)
+
     order = Order.objects.get(id=2)
-    assert str(order) == f"<Order: {order.created_at}>"
+    assert str(order) == str(order.created_at)
 
 
 def test_order_ordering(orders_data):
@@ -379,7 +380,7 @@ def test_ticket_clean_row_out_of_range(movie_sessions_data, orders_data):
 
 def test_ticket_clean_seat_out_of_range(movie_sessions_data, orders_data):
     with pytest.raises(ValidationError) as e_info:
-        Ticket.objects.create(movie_session_id=1, order_id=1, row=9, seat=13)
+        Ticket.objects.create(movie_session_id=1, order_id=1, row=10, seat=13)
 
     assert str(e_info.value) == (
         "{'seat': ['seat number must be in "

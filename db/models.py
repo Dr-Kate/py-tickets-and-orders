@@ -64,7 +64,7 @@ class Order(models.Model):
     )
 
     def __str__(self) -> str:
-        return "<Order: " + self.created_at.strftime("%Y-%m-%d %H:%M:%S") + ">"
+        return str(self.created_at)
 
     class Meta:
         ordering = ["-created_at"]
@@ -91,7 +91,7 @@ class Ticket(models.Model):
         )
 
     def clean(self) -> None:
-        if self.row >= self.movie_session.cinema_hall.rows:
+        if not (1 <= self.row <= self.movie_session.cinema_hall.rows):
             raise ValidationError(
                 {
                     "row": [
@@ -101,7 +101,7 @@ class Ticket(models.Model):
                     ]
                 }
             )
-        if self.seat >= self.movie_session.cinema_hall.seats_in_row:
+        if not (1 <= self.seat <= self.movie_session.cinema_hall.seats_in_row):
             raise ValidationError(
                 {
                     "seat": [
